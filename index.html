@@ -1,0 +1,165 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Amati Sudut Elevasi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: satu kolom. Banner, galeri lima kartu (gambar berskala, diketahui/ditanya, pemantik, petunjuk), tombol geser dan titik penanda. */
+:root {
+  --bg: #F1F3FB; --surface: #FFFFFF; --surface-2: #F6F7FD; --ink: #14183A; --muted: #566086; --line: #DDE2F3;
+  --accent: #3446D2; --accent-soft: #E5E9FF; --on-accent: #FFFFFF; --yellow: #F5B800; --on-yellow: #14183A;
+  --warm-soft: #FFF0D6;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif; --font-body: "Figtree", "Segoe UI", system-ui, sans-serif; --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0D1130; --surface: #161C40; --surface-2: #1B2250; --ink: #E9ECFF; --muted: #9BA5D1; --line: #272F5C; --accent: #8C9BFF; --accent-soft: #232C5E; --on-accent: #0D1130; --warm-soft: #3A2D1C; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0D1130; --surface: #161C40; --surface-2: #1B2250; --ink: #E9ECFF; --muted: #9BA5D1; --line: #272F5C; --accent: #8C9BFF; --accent-soft: #232C5E; --on-accent: #0D1130; --warm-soft: #3A2D1C; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--font-body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px 40px; }
+.wrap { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.hint { color: var(--muted); font-size: 15px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card h2 { font-size: 22px; font-weight: 800; }
+.sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.art { width: 100%; height: auto; display: block; background: var(--surface-2); border-radius: 12px; }
+.art .gnd { stroke: var(--ink); stroke-width: 2.5; }
+.art .soft { fill: var(--accent-soft); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.art .y { fill: var(--yellow); stroke: var(--on-yellow); stroke-width: 2; stroke-linejoin: round; }
+.art .door { fill: var(--accent); stroke: none; }
+.art .ink { stroke: var(--ink); stroke-width: 2; fill: none; stroke-linecap: round; }
+.art .acc { stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; fill: none; }
+.art .dash { stroke: var(--muted); stroke-width: 1.8; stroke-dasharray: 6 5; fill: none; }
+.art .thin { stroke: var(--muted); stroke-width: 1.6; fill: none; }
+.art .arc { fill: none; stroke: var(--ink); stroke-width: 1.8; }
+.art .water { fill: none; stroke: var(--accent); stroke-width: 2; opacity: .55; stroke-linecap: round; }
+.art .tg { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+.art .tx { font: 700 13px var(--font-body); fill: var(--ink); }
+.art .tx.a { fill: var(--accent); }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.facts > div { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.45; min-width: 0; }
+.facts h3 { margin: 0 0 4px; font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.facts ul { margin: 0; padding-left: 16px; }
+@media (max-width: 440px) { .facts { grid-template-columns: 1fr; } }
+.ask { background: var(--warm-soft); border-radius: 12px; padding: 12px 14px; font-weight: 600; }
+.ask small { display: block; font: 500 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+details { background: var(--surface-2); border-radius: 12px; padding: 10px 14px; }
+summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+details p { margin-top: 8px; font-size: 15px; }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.btn { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 12px; padding: 10px 18px; font: 700 15px var(--font-body); cursor: pointer; min-width: 64px; }
+.dots { display: flex; gap: 8px; justify-content: center; }
+.dots button { width: 12px; height: 12px; padding: 0; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; }
+.dots button[aria-current="true"] { background: var(--accent); width: 28px; border-radius: 8px; }
+.count { font: 500 13px var(--font-mono); color: var(--muted); text-align: center; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <p class="hint">Geser galeri, lihat gambarnya, lalu baca yang diketahui dan yang ditanyakan. Gambar dibuat sesuai skala. Angka pada soal adalah data ilustrasi.</p>
+
+  <section class="card" id="card" aria-live="polite"></section>
+
+  <div class="pager">
+    <button class="btn" type="button" id="prev" aria-label="Gambar sebelumnya">←</button>
+    <div class="dots" id="dots"></div>
+    <button class="btn" type="button" id="next" aria-label="Gambar berikutnya">→</button>
+  </div>
+  <div class="count" id="count"></div>
+</div>
+
+<script>
+(function () {
+  function $(s) { return document.querySelector(s); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function pt(cx, cy, r, deg) { var t = deg * Math.PI / 180; return [cx + r * Math.cos(t), cy - r * Math.sin(t)]; }
+  function tag(x, y, text, cls) {
+    var w = text.length * 7.6 + 14;
+    return '<rect class="tg" x="' + (x - w / 2) + '" y="' + (y - 11) + '" width="' + w + '" height="22" rx="6"/><text class="tx ' + (cls || '') + '" x="' + x + '" y="' + (y + 4.5) + '" text-anchor="middle">' + text + '</text>';
+  }
+  function arc(cx, cy, r, a1, a2) { var p = pt(cx, cy, r, a1), q = pt(cx, cy, r, a2); return '<path class="arc" d="M' + p[0] + ' ' + p[1] + ' A' + r + ' ' + r + ' 0 0 0 ' + q[0] + ' ' + q[1] + '"/>'; }
+  function ra(x, y, sx, sy) { return '<path class="thin" d="M' + (x + sx * 11) + ' ' + y + ' L' + (x + sx * 11) + ' ' + (y + sy * 11) + ' L' + x + ' ' + (y + sy * 11) + '"/>'; }
+  function svg(inner, label) { return '<svg class="art" viewBox="0 0 340 215" role="img" aria-label="' + label + '">' + inner + '</svg>'; }
+  function G(y) { return '<line class="gnd" x1="12" y1="' + y + '" x2="328" y2="' + y + '"/>'; }
+
+  /* 1. Tangga candi: alas 8 m, tinggi 6 m, miring 10 m (22 px per m) */
+  function tangga() {
+    var x0 = 60, y0 = 175, dx = 22, dy = 16.5, p = 'M' + x0 + ' ' + y0, i;
+    for (i = 0; i < 8; i++) { p += ' L' + (x0 + dx * i) + ' ' + (y0 - dy * (i + 1)) + ' L' + (x0 + dx * (i + 1)) + ' ' + (y0 - dy * (i + 1)); }
+    p += ' L236 175 Z';
+    return svg(G(175) + '<rect class="soft" x="236" y="43" width="66" height="132"/><path class="y" d="M252 43 a17 21 0 0 1 34 0 z"/><line class="ink" x1="269" y1="22" x2="269" y2="30"/>' +
+      '<path class="soft" d="' + p + '"/><polygon class="dash" points="60,175 236,175 236,43"/><line class="acc" x1="60" y1="175" x2="236" y2="43"/>' + ra(236, 175, -1, -1) +
+      arc(60, 175, 36, 0, 36.87) + tag(112, 158, 'β', 'a') + tag(134, 88, '10 m', 'a') + tag(148, 192, '8 m') + tag(236, 109, '6 m'),
+      'Tangga candi dilihat dari samping. Alas 8 meter, tinggi 6 meter, panjang tangga 10 meter, sudut β di kaki tangga.');
+  }
+  /* 2. Atap pelana: rusuk 8 m, sudut 30° (14 px per m) */
+  function atap() {
+    var ex = 73, ey = 140, ax = 170, ay = 84;
+    return svg(G(185) + '<rect class="soft" x="85" y="140" width="170" height="45"/><rect class="door" x="157" y="156" width="26" height="29" rx="2"/>' +
+      '<polygon class="y" points="' + ex + ',' + ey + ' 267,' + ey + ' ' + ax + ',' + ay + '"/><line class="dash" x1="170" y1="84" x2="170" y2="140"/>' + ra(170, 140, 1, -1) +
+      '<line class="acc" x1="' + ex + '" y1="' + ey + '" x2="' + ax + '" y2="' + ay + '"/>' + arc(ex, ey, 36, 0, 30) +
+      tag(127, 128, '30°', 'a') + tag(110, 94, '8 m', 'a') + tag(222, 124, 'tinggi = ?'),
+      'Penampang atap pelana berbentuk segitiga sama kaki. Rusuk atap 8 meter membentuk sudut 30 derajat dengan bidang datar.');
+  }
+  /* 3. Menara jam: jarak 30√3 m, elevasi 30° (±3,4 px per m) */
+  function menara() {
+    return svg(G(175) + '<rect class="soft" x="197" y="105" width="40" height="70"/><circle class="y" cx="217" cy="130" r="12"/><line class="ink" x1="217" y1="130" x2="217" y2="122"/><line class="ink" x1="217" y1="130" x2="223" y2="134"/>' +
+      '<polygon class="y" points="193,105 241,105 217,73"/><line class="acc" x1="40" y1="175" x2="217" y2="73"/>' +
+      '<line class="dash" x1="217" y1="73" x2="290" y2="73"/><line class="dash" x1="290" y1="73" x2="290" y2="175"/>' +
+      '<circle cx="40" cy="175" r="6" fill="var(--ink)"/>' + arc(40, 175, 44, 0, 30) + tag(104, 158, '30°', 'a') +
+      '<line class="thin" x1="40" y1="188" x2="217" y2="188"/><line class="thin" x1="40" y1="183" x2="40" y2="193"/><line class="thin" x1="217" y1="183" x2="217" y2="193"/>' +
+      tag(128, 196, '30√3 m') + tag(290, 124, 'tinggi = ?') + tag(40, 150, 'pengamat'),
+      'Menara jam dilihat dari jarak 30 akar 3 meter. Puncaknya terlihat dengan sudut elevasi 30 derajat.');
+  }
+  /* 4. Layang-layang: benang 80 m, sudut 60° (1,8 px per m) */
+  function layang() {
+    var sx = 40, sy = 175, ex = sx + 144 * 0.5, ey = sy - 144 * Math.sin(Math.PI / 3);
+    return svg(G(175) + '<line class="acc" x1="' + sx + '" y1="' + sy + '" x2="' + ex + '" y2="' + ey + '"/>' +
+      '<polygon class="y" points="' + ex + ',12 ' + (ex + 19) + ',31 ' + ex + ',' + ey + ' ' + (ex - 19) + ',31"/><path class="ink" d="M' + ex + ' 12 L' + ex + ' ' + ey + ' M' + (ex - 19) + ' 31 L' + (ex + 19) + ' 31"/>' +
+      '<path class="ink" d="M' + ex + ' ' + ey + ' q18 6 8 18 q-8 12 8 24"/>' +
+      '<line class="dash" x1="' + ex + '" y1="' + ey + '" x2="' + ex + '" y2="175"/>' + ra(ex, 175, -1, -1) +
+      '<circle cx="' + sx + '" cy="' + sy + '" r="6" fill="var(--ink)"/>' + arc(sx, sy, 42, 0, 60) + tag(sx + 66, 149, '60°', 'a') +
+      tag(58, 103, '80 m', 'a') + tag(ex, 118, 'tinggi = ?') + tag(sx, 196, 'pengamat'),
+      'Layang-layang diterbangkan dengan benang 80 meter yang membentuk sudut 60 derajat dengan tanah.');
+  }
+  /* 5. Perahu pinisi: tiang 12 m, sudut tali 60° (10 px per m) */
+  function pinisi() {
+    var mx = 140, ty = 30, dy = 150, ex = mx + 120 / Math.tan(Math.PI / 3);
+    return svg('<path class="water" d="M14 176 q12 -7 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"/>' +
+      '<path class="soft" d="M64 150 L256 150 L240 186 L80 186 Z"/><polygon class="soft" points="134,40 134,144 82,144"/>' +
+      '<line class="gnd" x1="' + mx + '" y1="' + ty + '" x2="' + mx + '" y2="' + dy + '"/><polygon class="y" points="140,30 158,35 140,40"/>' +
+      '<polygon class="dash" points="' + mx + ',' + ty + ' ' + mx + ',' + dy + ' ' + ex + ',' + dy + '"/>' +
+      '<line class="acc" x1="' + mx + '" y1="' + ty + '" x2="' + ex + '" y2="' + dy + '"/>' + ra(mx, dy, 1, -1) +
+      arc(ex, dy, 32, 120, 180) + tag(ex - 44, 126, '60°', 'a') + tag(mx, 100, '12 m') + tag(216, 84, 'tali = ?', 'a'),
+      'Perahu pinisi dengan tiang setinggi 12 meter. Tali dari puncak tiang ke dek membentuk sudut 60 derajat.');
+  }
+
+  var S = [
+    { t: 'Tangga candi', s: 'Candi Borobudur, Jawa Tengah', art: tangga, know: ['tinggi 6 m', 'jarak mendatar 8 m', 'panjang tangga 10 m'], ask: 'Seberapa curam tangganya?', q: 'Tangga naik 6 m untuk jarak mendatar 8 m. Seberapa curam tangganya?', sum: 'Lihat jawaban', a: 'Bandingkan tinggi dengan jarak mendatar: 6 ÷ 8 = 3/4 (tan β). Makin besar angkanya, makin curam.' },
+    { t: 'Atap pelana', s: 'Penampang atap berbentuk segitiga sama kaki', art: atap, know: ['rusuk atap 8 m', 'sudut dengan bidang datar 30°'], ask: 'Berapa tinggi puncak atap?', q: 'Rusuk atap 8 m membentuk sudut 30° dengan bidang datar. Berapa tinggi puncaknya?', sum: 'Lihat petunjuk', a: 'Tinggi ada di depan sudut 30°, rusuk adalah sisi miring. Perbandingan depan ÷ miring adalah sin.' },
+    { t: 'Menara jam', s: 'Contoh: Jam Gadang, Bukittinggi', art: menara, know: ['jarak mendatar 30√3 m', 'sudut elevasi 30°'], ask: 'Berapa tinggi menara?', q: 'Dari jarak 30√3 m, puncak menara terlihat dengan sudut elevasi 30°. Berapa tingginya?', sum: 'Lihat petunjuk', a: 'Jarak mendatar ada di samping sudut, tinggi ada di depan sudut. Perbandingan depan ÷ samping adalah tan.' },
+    { t: 'Layang-layang', s: 'Permainan tradisional Nusantara', art: layang, know: ['panjang benang 80 m', 'sudut dengan tanah 60°'], ask: 'Setinggi apa layang-layangnya?', q: 'Benang 80 m terulur dengan sudut 60° terhadap tanah. Setinggi apa layang-layangnya?', sum: 'Lihat petunjuk', a: 'Benang adalah sisi miring dan tinggi ada di depan sudut 60°. Perbandingan depan ÷ miring adalah sin.' },
+    { t: 'Perahu pinisi', s: 'Sulawesi Selatan', art: pinisi, know: ['tinggi tiang 12 m', 'sudut tali dengan dek 60°'], ask: 'Berapa panjang tali?', q: 'Tiang setinggi 12 m. Tali dari puncak tiang ke dek membentuk sudut 60°. Berapa panjang tali?', sum: 'Lihat petunjuk', a: 'Tiang ada di depan sudut 60° dan tali adalah sisi miring. Gunakan sin 60° = tiang ÷ tali.' }
+  ];
+  var i = 0;
+  $('#dots').innerHTML = S.map(function (_, k) { return '<button type="button" data-k="' + k + '" aria-label="Gambar ' + (k + 1) + '"></button>'; }).join('');
+  function show() {
+    var s = S[i];
+    $('#card').innerHTML = s.art() +
+      '<div><h2>' + esc(s.t) + '</h2><p class="sub">' + esc(s.s) + '</p></div>' +
+      '<div class="facts"><div><h3>Diketahui</h3><ul>' + s.know.map(function (k) { return '<li>' + esc(k) + '</li>'; }).join('') + '</ul></div><div><h3>Ditanya</h3><p>' + esc(s.ask) + '</p></div></div>' +
+      '<div class="ask"><small>Pemantik</small>' + esc(s.q) + '</div>' +
+      '<details><summary>' + s.sum + '</summary><p>' + esc(s.a) + '</p></details>';
+    Array.prototype.forEach.call(document.querySelectorAll('#dots button'), function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    $('#count').textContent = (i + 1) + ' / ' + S.length;
+  }
+  $('#prev').addEventListener('click', function () { i = (i + S.length - 1) % S.length; show(); });
+  $('#next').addEventListener('click', function () { i = (i + 1) % S.length; show(); });
+  $('#dots').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { i = +b.dataset.k; show(); } });
+  show();
+})();
+</script>
+
+</body></html>
